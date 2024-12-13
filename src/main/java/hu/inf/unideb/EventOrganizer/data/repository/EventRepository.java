@@ -4,8 +4,14 @@ import hu.inf.unideb.EventOrganizer.data.entity.EventEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
-    // Lekérdezés név alapján
-    EventEntity findByName(String name);
+    Optional<EventEntity> findByNameAndLocation(String name, String location);
+    List<EventEntity> findByNameContainingIgnoreCase(String name);
+    List<EventEntity> findByLocationContainingIgnoreCase(String location);
+    List<EventEntity> findByDate(Date date);
 }
