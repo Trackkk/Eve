@@ -1,4 +1,4 @@
-package hu.inf.unideb.EventOrganizer.controller;
+package hu.inf.unideb.EventOrganizer.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
