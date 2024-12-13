@@ -4,8 +4,16 @@ import hu.inf.unideb.EventOrganizer.data.entity.ParticipantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ParticipantRepository extends JpaRepository<ParticipantEntity, Long> {
-    // Lekérdezés e-mail alapján
+
     ParticipantEntity findByEmail(String email);
+
+    List<ParticipantEntity> findByNameContainingIgnoreCase(String name);
+
+    List<ParticipantEntity> findByEventId(Long eventId);
+
+    List<ParticipantEntity> findByEmailContainingIgnoreCase(String email);
 }
