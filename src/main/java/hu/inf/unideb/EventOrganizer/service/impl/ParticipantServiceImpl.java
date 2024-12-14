@@ -56,8 +56,6 @@ public class ParticipantServiceImpl implements ParticipantService {
             participantEntities = repo.findByNameContainingIgnoreCase(name);
         } else if (email != null && !email.isEmpty()) {
             participantEntities = repo.findByEmailContainingIgnoreCase(email);
-        } else if (eventId != null) {
-            participantEntities = repo.findByEventId(eventId);
         } else {
             participantEntities = repo.findAll();
         }

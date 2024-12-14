@@ -13,8 +13,6 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Long> {
 
     List<TicketEntity> findByEventId(Long eventId);
 
-    // Feltételezve, hogy a TicketEntity rendelkezik TicketType mezővel
-    List<TicketEntity> findByTicketType(String ticketType);
 
     long countByEventId(Long eventId);
 

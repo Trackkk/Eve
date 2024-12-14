@@ -53,8 +53,6 @@ public class TicketServiceImpl implements TicketService {
             ticketEntities = repo.findByEventId(eventId);
         } else if (participantId != null) {
             ticketEntities = repo.findByParticipantId(participantId);
-        } else if (ticketType != null && !ticketType.isEmpty()) {
-            ticketEntities = repo.findByTicketType(ticketType);
         } else {
             ticketEntities = repo.findAll();
         }

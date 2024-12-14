@@ -13,7 +13,5 @@ public interface ParticipantRepository extends JpaRepository<ParticipantEntity, 
 
     List<ParticipantEntity> findByNameContainingIgnoreCase(String name);
 
-    List<ParticipantEntity> findByEventId(Long eventId);
-
     List<ParticipantEntity> findByEmailContainingIgnoreCase(String email);
 }
