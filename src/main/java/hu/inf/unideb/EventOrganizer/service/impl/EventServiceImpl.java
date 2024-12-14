@@ -46,23 +46,27 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto updateEvent(String name, String location, EventDto eventDto) {
-        Optional<EventEntity> existingEvent = repo.findByNameAndLocation(name, location);
+    public EventDto updateEvent(EventDto eventDto) {
+        Optional<EventEntity> existingEvent = repo.findById(eventDto.getId());
 
         if (existingEvent.isPresent()) {
             EventEntity eventEntity = existingEvent.get();
 
+            // Frissítjük az eseményt
             eventEntity.setName(eventDto.getName());
             eventEntity.setLocation(eventDto.getLocation());
             eventEntity.setDate(eventDto.getDate());
 
+            // Mentjük a frissített eseményt
             EventEntity updatedEvent = repo.save(eventEntity);
 
+            // Visszatérünk a frissített eseménnyel
             return mapper.eventEntityToEventDto(updatedEvent);
         } else {
-            throw new RuntimeException("Event not found with name: " + name + " and location: " + location);
+            throw new RuntimeException("Event not found with id: " + eventDto.getId());
         }
     }
+
 
     @Override
     public List<EventDto> searchEvents(String name, String location, Date date) {

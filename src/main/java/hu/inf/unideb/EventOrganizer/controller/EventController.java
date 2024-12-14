@@ -25,8 +25,9 @@ public class EventController {
     @PutMapping("/{id}")
     public EventDto updateEvent(@PathVariable Long id, @RequestBody EventDto eventDto) {
         eventDto.setId(id);
-        return eventService.updateEvent(eventDto.getName(), eventDto.getLocation(), eventDto);
+        return eventService.updateEvent(eventDto);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable Long id) {
