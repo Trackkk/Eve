@@ -12,8 +12,7 @@ public class TicketDto {
     private Long eventId;
     private Long participantId;
 
-    public TicketDto() {
-    }
+    public TicketDto() {}
 
     public TicketDto(Long id, double price, String category, Long eventId, Long participantId) {
         this.id = id;

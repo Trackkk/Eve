@@ -1,6 +1,10 @@
 package hu.inf.unideb.EventOrganizer.service.impl;
 
+import hu.inf.unideb.EventOrganizer.data.entity.EventEntity;
+import hu.inf.unideb.EventOrganizer.data.entity.ParticipantEntity;
 import hu.inf.unideb.EventOrganizer.data.entity.TicketEntity;
+import hu.inf.unideb.EventOrganizer.data.repository.EventRepository;
+import hu.inf.unideb.EventOrganizer.data.repository.ParticipantRepository;
 import hu.inf.unideb.EventOrganizer.data.repository.TicketRepository;
 import hu.inf.unideb.EventOrganizer.service.TicketService;
 import hu.inf.unideb.EventOrganizer.service.dto.TicketDto;
@@ -19,9 +23,24 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private TicketMapper mapper;
 
+    @Autowired
+    private EventRepository eventRepo;
+    @Autowired
+    private ParticipantRepository participantRepo;
+
     @Override
     public TicketDto saveTicket(TicketDto ticketDto) {
-        TicketEntity ticketEntity = mapper.ticketDtoToTicketEntity(ticketDto);
+        EventEntity event = eventRepo.findById(ticketDto.getEventId())
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+        ParticipantEntity participant = participantRepo.findById(ticketDto.getParticipantId())
+                .orElseThrow(() -> new RuntimeException("Participant not found"));
+
+        TicketEntity ticketEntity = new TicketEntity();
+        ticketEntity.setPrice(ticketDto.getPrice());
+        ticketEntity.setCategory(ticketDto.getCategory());
+        ticketEntity.setEvent(event);
+        ticketEntity.setParticipant(participant);
+
         TicketEntity savedTicket = repo.save(ticketEntity);
 
         return mapper.ticketEntityToTicketDto(savedTicket);

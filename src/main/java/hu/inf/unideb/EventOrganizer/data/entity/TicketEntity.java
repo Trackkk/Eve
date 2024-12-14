@@ -14,23 +14,21 @@ public class TicketEntity {
     @Column(name = "category", nullable = false)
     private String category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "event_id", referencedColumnName = "id")
     private EventEntity event;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "participant_id", referencedColumnName = "id")
     private ParticipantEntity participant;
 
     public TicketEntity() {
     }
 
-    public TicketEntity(long id, double price, String category, EventEntity event, ParticipantEntity participant) {
+    public TicketEntity(long id, double price, String category) {
         this.id = id;
         this.price = price;
         this.category = category;
-        this.event = event;
-        this.participant = participant;
     }
 
     public long getId() {
@@ -78,7 +76,11 @@ public class TicketEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TicketEntity that = (TicketEntity) o;
-        return id == that.id && Double.compare(price, that.price) == 0 && Objects.equals(category, that.category) && Objects.equals(event, that.event) && Objects.equals(participant, that.participant);
+        return id == that.id &&
+                Double.compare(that.price, price) == 0 &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(event, that.event) &&
+                Objects.equals(participant, that.participant);
     }
 
     @Override

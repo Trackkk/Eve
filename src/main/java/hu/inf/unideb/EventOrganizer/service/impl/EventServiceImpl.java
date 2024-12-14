@@ -52,15 +52,11 @@ public class EventServiceImpl implements EventService {
         if (existingEvent.isPresent()) {
             EventEntity eventEntity = existingEvent.get();
 
-            // Frissítjük az eseményt
             eventEntity.setName(eventDto.getName());
             eventEntity.setLocation(eventDto.getLocation());
             eventEntity.setDate(eventDto.getDate());
-
-            // Mentjük a frissített eseményt
             EventEntity updatedEvent = repo.save(eventEntity);
 
-            // Visszatérünk a frissített eseménnyel
             return mapper.eventEntityToEventDto(updatedEvent);
         } else {
             throw new RuntimeException("Event not found with id: " + eventDto.getId());

@@ -17,11 +17,11 @@ public class ParticipantEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "phone_number")
-    private String phonenumber;
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
 
     @ManyToMany(mappedBy = "participants")
     private Set<EventEntity> eventId;
@@ -29,12 +29,12 @@ public class ParticipantEntity {
     public ParticipantEntity() {
     }
 
-    public ParticipantEntity(Long id, String name, String email, String password, String phonenumber, Set<EventEntity> eventId) {
+    public ParticipantEntity(Long id, String name, String email, String password, String phoneNumber, Set<EventEntity> eventId) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.phonenumber = phonenumber;
+        this.phoneNumber = phoneNumber;
         this.eventId = eventId;
     }
 
@@ -70,12 +70,12 @@ public class ParticipantEntity {
         this.password = password;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Set<EventEntity> getEventId() {
@@ -91,11 +91,11 @@ public class ParticipantEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParticipantEntity that = (ParticipantEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(phonenumber, that.phonenumber) && Objects.equals(eventId, that.eventId);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(eventId, that.eventId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password, phonenumber, eventId);
+        return Objects.hash(id, name, email, password, phoneNumber, eventId);
     }
 }
