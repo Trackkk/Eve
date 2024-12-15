@@ -1,12 +1,15 @@
 package hu.inf.unideb.EventOrganizer.data.entity;
 
 import jakarta.persistence.*;
-import java.util.Objects;
-import java.util.Set;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.*;
 
 @Entity
 @Table(name = "participant")
-public class ParticipantEntity {
+public class ParticipantEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -25,6 +28,9 @@ public class ParticipantEntity {
 
     @ManyToMany(mappedBy = "participants")
     private Set<EventEntity> eventId;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Set<EligibilityEntity> eligibility;
 
     public ParticipantEntity() {
     }
@@ -84,6 +90,28 @@ public class ParticipantEntity {
 
     public void setEventId(Set<EventEntity> eventId) {
         this.eventId = eventId;
+    }
+
+    public Set<EligibilityEntity> getEligibility() {
+        return eligibility;
+    }
+
+    public void setEligibility(Set<EligibilityEntity> eligibility) {
+        this.eligibility = eligibility;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for(EligibilityEntity j : eligibility){
+            authorities.add(new SimpleGrantedAuthority(j.getName()));
+        }
+        return authorities;
     }
 
     @Override
