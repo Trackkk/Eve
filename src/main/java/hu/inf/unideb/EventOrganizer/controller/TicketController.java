@@ -15,6 +15,11 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions(){
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public TicketDto createTicket(@RequestBody TicketDto ticketDto) {
         return ticketService.saveTicket(ticketDto);

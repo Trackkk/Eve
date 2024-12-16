@@ -17,6 +17,11 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions(){
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public EventDto createEvent(@RequestBody EventDto eventDto) {
         return eventService.saveEvent(eventDto);

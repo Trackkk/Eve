@@ -25,7 +25,7 @@ public class EventEntity {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TicketEntity> tickets;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "event_participant",
             joinColumns = @JoinColumn(name = "event_id"),

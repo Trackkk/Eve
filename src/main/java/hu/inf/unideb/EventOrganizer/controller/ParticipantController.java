@@ -15,6 +15,11 @@ public class ParticipantController {
     @Autowired
     private ParticipantService participantService;
 
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions(){
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ParticipantDto createParticipant(@RequestBody ParticipantDto participantDto) {
         return participantService.saveParticipant(participantDto);
