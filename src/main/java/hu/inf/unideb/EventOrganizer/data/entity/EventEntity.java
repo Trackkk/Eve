@@ -1,10 +1,8 @@
 package hu.inf.unideb.EventOrganizer.data.entity;
 
 import jakarta.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
+import java.util.*;
 
 @Entity
 @Table(name = "event")
@@ -31,7 +29,7 @@ public class EventEntity {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "participant_id")
     )
-    private Set<ParticipantEntity> participants;
+    private Set<ParticipantEntity> participants = new HashSet<>();
 
     public EventEntity() {
     }

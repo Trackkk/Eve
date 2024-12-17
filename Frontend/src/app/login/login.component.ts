@@ -24,16 +24,17 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onLogin(){
     this.authService.login(this.email, this.password).subscribe(
       (response: any) => {
         localStorage.setItem('token', response)
-        console.log('Sikeres bejelentkezés');
+        console.log('Login Successful');
+        this.router.navigate(['/events']);
       },
       error => {
-        console.error('Hiba történt a bejelentkezés során', error)
+        console.error('An error occur during login', error)
       }
     );
   }

@@ -15,7 +15,7 @@ import java.util.List;
 public class EventController {
 
     @Autowired
-    private EventService eventService;
+    EventService eventService;
 
     @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
     public ResponseEntity<Void> handleOptions(){

@@ -1,5 +1,5 @@
 <mat-card>
-  <h2>Bejelentkezés</h2>
+  <h2>Login</h2>
   <form (ngSubmit)="onLogin()">
 
     <mat-form-field appearance="fill">
@@ -8,11 +8,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Jelszó</mat-label>
+      <mat-label>Password</mat-label>
       <input matInput type="password" [(ngModel)]="password" name="password" required>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Bejelentkezés</button>
+    <button mat-raised-button color="primary" type="submit">Login</button>
 
   </form>
 </mat-card>

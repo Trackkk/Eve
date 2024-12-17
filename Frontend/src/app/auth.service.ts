@@ -14,8 +14,8 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' });
   }
 
-  register(registrationData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registration`, registrationData, { responseType: 'text' });
+  register(name: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registration`, {name, email, password}, { responseType: 'text' });
   }
 
 }

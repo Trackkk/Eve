@@ -9,6 +9,8 @@ public interface ParticipantService {
 
     ParticipantDto getParticipantById(Long id);
 
+    ParticipantDto findByEmail(String email);
+
     List<ParticipantDto> getAllParticipants();
 
     void deleteParticipant(Long id);

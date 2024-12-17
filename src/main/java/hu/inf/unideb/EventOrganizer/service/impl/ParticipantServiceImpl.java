@@ -5,6 +5,7 @@ import hu.inf.unideb.EventOrganizer.data.repository.ParticipantRepository;
 import hu.inf.unideb.EventOrganizer.service.ParticipantService;
 import hu.inf.unideb.EventOrganizer.service.dto.ParticipantDto;
 import hu.inf.unideb.EventOrganizer.service.mapper.ParticipantMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Autowired
     private ParticipantMapper mapper;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public ParticipantDto saveParticipant(ParticipantDto participantDto) {
@@ -35,6 +39,12 @@ public class ParticipantServiceImpl implements ParticipantService {
         } else {
             throw new RuntimeException("Participant not found with id: " + id);
         }
+    }
+
+    @Override
+    public ParticipantDto findByEmail(String email) {
+        ParticipantEntity entity = repo.findByEmail(email);
+        return modelMapper.map(entity, ParticipantDto.class);
     }
 
     @Override

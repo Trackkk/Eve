@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import {EventsService} from '../events.service';
 
 @Component({
   selector: 'app-registration',
@@ -25,19 +26,16 @@ export class RegistrationComponent {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private eventService: EventsService,
+    private router: Router) {}
 
   onRegister() {
-    const registrationData = {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    };
-
-    this.authService.register(registrationData).subscribe(
+    this.authService.register(this.name, this.email, this.password).subscribe(
       (response: string) => {
-        const jsonResponse = { token: response };
-        console.log('Sikeres regisztráció, token:', jsonResponse);
+        localStorage.setItem('token', response)
+        console.log('Registration Successful');
         this.router.navigate(['/login']);
       },
       error => {
