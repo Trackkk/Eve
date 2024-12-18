@@ -20,6 +20,9 @@ public class EventEntity {
     @Column(name = "date", nullable = false)
     private Date date;
 
+    @Column(name = "creatorEmail", nullable = false)
+    private String creatorEmail;
+
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TicketEntity> tickets;
 
@@ -81,6 +84,14 @@ public class EventEntity {
 
     public void setTickets(List<TicketEntity> tickets) {
         this.tickets = tickets;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     public Set<ParticipantEntity> getParticipants() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,5 +17,14 @@ export class AuthService {
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/registration`, {name, email, password}, { responseType: 'text' });
   }
+
+  getUserEmail(): Observable<string> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get(`${this.apiUrl}/user-email`, { headers, responseType: 'text' });
+  }
+
 
 }

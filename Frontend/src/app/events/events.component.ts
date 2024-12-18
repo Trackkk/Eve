@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EventsService, Event } from '../events.service';
 import { RouterModule } from '@angular/router';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {AuthService} from '../auth.service';
+
 
 @Component({
   selector: 'app-events',
@@ -22,42 +25,106 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput
   ],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
   events: Event[] = [];
-  displayedColumns: string[] = ['name', 'location', 'date'];
-  dataSource = new MatTableDataSource<Event>(this.events);
+  filteredEvents: Event[] = [];
+  searchTerm: string = '';
+  startDate: string = '';
+  endDate: string = '';
 
-  newEvent: Event = { id: 0, name: '', location: '', date: new Date() };
+  showModal: boolean = false;
+  isEditMode: boolean = false;
 
-  isCreating = false;
+  currentEvent: Event = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '' };
 
-  constructor(private eventsService: EventsService) {}
+  currentUserEmail: string = '';
+
+  constructor(private eventsService: EventsService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadEvents();
+    this.getCurrentUserEmail();
   }
 
   loadEvents(): void {
     this.eventsService.getAllEvents().subscribe(data => {
-      this.events = data;
-      this.dataSource.data = data;
+      this.events = data.map(event => ({
+        ...event,
+        date: new Date(event.date)
+      }));
+      this.filterEvents();
     });
   }
 
-  addEvent(): void {
-    this.eventsService.saveEvent(this.newEvent).subscribe(() => {
-      this.loadEvents();
-      this.isCreating = false;
-      this.resetNewEvent();
+
+  filterEvents(): void {
+    this.filteredEvents = this.events.filter(event => {
+      const matchesSearch =
+        event.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        event.location.toLowerCase().includes(this.searchTerm.toLowerCase());
+
+      const matchesStartDate = !this.startDate || new Date(event.date) >= new Date(this.startDate);
+      const matchesEndDate = !this.endDate || new Date(event.date) <= new Date(this.endDate);
+
+      return matchesSearch && matchesStartDate && matchesEndDate;
     });
   }
 
-  resetNewEvent(): void {
-    this.newEvent = { id: 0, name: '', location: '', date: new Date() };
+  openCreateForm(): void {
+    this.isEditMode = false;
+    this.currentEvent = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '' };
+    this.showModal = true;
   }
+
+  openEditForm(event: Event): void {
+    if (event.creatorEmail === this.currentUserEmail) {
+      this.isEditMode = true;
+      this.currentEvent = { ...event };
+      this.showModal = true;
+    }
+  }
+
+  saveEvent(): void {
+    this.currentEvent.date = new Date(this.currentEvent.date);
+
+    if (this.isEditMode) {
+      this.eventsService.saveEvent(this.currentEvent).subscribe(() => this.loadEvents());
+    } else {
+      this.eventsService.saveEvent(this.currentEvent).subscribe(() => this.loadEvents());
+    }
+    this.closeModal();
+  }
+
+  deleteEvent(eventId: number): void {
+    this.eventsService.deleteEvent(eventId).subscribe(() => this.loadEvents());
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+  buyTicket(eventId: number): void {
+    console.log('Ticket purchased for event ID:', eventId);
+  }
+
+  getCurrentUserEmail(): void {
+    this.authService.getUserEmail().subscribe({
+      next: (email) => {
+        this.currentUserEmail = email;
+      },
+      error: (err) => {
+        console.error('Failed to fetch user email:', err);
+        alert('Unable to fetch user email. Please log in again.');
+      }
+    });
+  }
+
 }

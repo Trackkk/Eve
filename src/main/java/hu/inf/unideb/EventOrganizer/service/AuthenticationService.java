@@ -7,4 +7,6 @@ public interface AuthenticationService {
     String registration(RegistrationDto dto);
 
     String login(LoginDto dto);
+
+
 }

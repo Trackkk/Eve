@@ -11,6 +11,7 @@ public class EventDto {
     private String name;
     private String location;
     private Date date;
+    private String creatorEmail;
 
     public EventDto() {
     }
@@ -52,6 +53,14 @@ public class EventDto {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     @Override

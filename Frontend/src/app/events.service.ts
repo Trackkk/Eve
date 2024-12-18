@@ -3,10 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Event {
+  creatorEmail: string;
   id: number;
   name: string;
   location: string;
-  date: Date;
+  date: string | Date;
 }
 
 @Injectable({
@@ -31,4 +32,13 @@ export class EventsService {
   saveEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.baseUrl}/events`, event, { headers: this.getHeaders() });
   }
+
+  deleteEvent(eventId: number): Observable<void> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.delete<void>(`${this.baseUrl}/events/${eventId}`, { headers });
+  }
+
 }
