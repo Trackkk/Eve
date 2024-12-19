@@ -1,0 +1,21 @@
+<div class="ticket-container">
+  <h2>My Tickets</h2>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="myTickets.length > 0; else noTickets" class="ticket-list">
+    <div *ngFor="let ticket of myTickets" class="ticket">
+      <p><strong>Event Name:</strong> {{ ticket.eventName || 'Loading...' }}</p>
+      <p><strong>Event Location:</strong> {{ ticket.eventLocation || 'Loading...' }}</p>
+      <p><strong>Category:</strong> {{ ticket.category }}</p>
+      <p><strong>Price:</strong> {{ ticket.price }} HUF</p>
+      <button (click)="deleteTicket(ticket.id)">Delete</button>
+    </div>
+  </div>
+
+  <ng-template #noTickets>
+    <p>You have no tickets at the moment.</p>
+  </ng-template>
+</div>

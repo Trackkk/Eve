@@ -8,6 +8,7 @@ export interface Event {
   name: string;
   location: string;
   date: string | Date;
+  price: number;
 }
 
 @Injectable({

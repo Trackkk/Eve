@@ -61,4 +61,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = participantrepo.findByEmail(dto.getEmail());
         return jwtService.generateToken(user);
     }
+
+    @Override
+    public Long getParticipantIdByEmail(String email) {
+        ParticipantEntity participant = participantrepo.findByEmail(email);
+        return participant.getId();
+    }
+
 }

@@ -8,5 +8,5 @@ public interface AuthenticationService {
 
     String login(LoginDto dto);
 
-
+    Long getParticipantIdByEmail(String email);
 }

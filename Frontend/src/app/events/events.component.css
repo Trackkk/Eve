@@ -38,7 +38,8 @@
   background-color: #28a745;
   border: none;
   min-width: 150px;
-  height: 50px;
+  height: 35px;
+  margin: 3px 0;
   border-radius: 50px;
   color: #fff;
 }
@@ -47,7 +48,20 @@
   background-color: #218838;
 }
 
-/* Táblázat */
+.btn-my-tickets {
+  background-color: #afa727;
+  border: none;
+  min-width: 150px;
+  height: 35px;
+  margin: 3px 0;
+  border-radius: 50px;
+  color: #fff;
+}
+
+.btn-my-tickets:hover {
+  background-color: #989222;
+}
+
 .table {
   margin-bottom: 0;
 }
@@ -96,4 +110,41 @@
 
 .modal-footer button {
   border-radius: 20px;
+}
+
+.logout-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.btn-logout {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.btn-logout i {
+  margin-right: 8px;
+}
+
+.btn-logout:focus {
+  outline: none;
+}
+
+.btn-logout:active {
+  background-color: #bd2130;
+  transform: scale(0.98);
 }

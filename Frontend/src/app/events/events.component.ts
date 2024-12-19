@@ -11,6 +11,7 @@ import { EventsService, Event } from '../events.service';
 import { RouterModule } from '@angular/router';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {AuthService} from '../auth.service';
+import { TicketService } from '../ticket.service';
 
 
 @Component({
@@ -43,11 +44,10 @@ export class EventsComponent implements OnInit {
   showModal: boolean = false;
   isEditMode: boolean = false;
 
-  currentEvent: Event = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '' };
-
+  currentEvent: Event = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '', price: 0 };
   currentUserEmail: string = '';
 
-  constructor(private eventsService: EventsService, private authService: AuthService) {}
+  constructor(private eventsService: EventsService, private authService: AuthService, private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.loadEvents();
@@ -58,7 +58,8 @@ export class EventsComponent implements OnInit {
     this.eventsService.getAllEvents().subscribe(data => {
       this.events = data.map(event => ({
         ...event,
-        date: new Date(event.date)
+        date: new Date(event.date),
+        price: 3000
       }));
       this.filterEvents();
     });
@@ -80,7 +81,7 @@ export class EventsComponent implements OnInit {
 
   openCreateForm(): void {
     this.isEditMode = false;
-    this.currentEvent = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '' };
+    this.currentEvent = { id: 0, name: '', location: '', date: new Date(), creatorEmail: '', price: 3000 };
     this.showModal = true;
   }
 
@@ -112,7 +113,33 @@ export class EventsComponent implements OnInit {
   }
 
   buyTicket(eventId: number): void {
-    console.log('Ticket purchased for event ID:', eventId);
+    this.authService.getUserEmail().subscribe({
+      next: (email) => {
+        if (email) {
+          this.authService.getParticipantIdByEmail(email).subscribe({
+            next: (participantId) => {
+              const event = this.events.find(e => e.id === eventId);
+              if (event) {
+                const ticket = {
+                  eventId: event.id,
+                  price: event.price,
+                  category: 'Standard',
+                  participantId: participantId,
+                };
+
+                this.ticketService.createTicket(ticket).subscribe({
+                  next: (response) => {
+                    alert('Ticket purchased successfully!');
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          alert('You must be logged in to purchase tickets.');
+        }
+      }
+    });
   }
 
   getCurrentUserEmail(): void {
@@ -125,6 +152,17 @@ export class EventsComponent implements OnInit {
         alert('Unable to fetch user email. Please log in again.');
       }
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.startDate = '';
+    this.endDate = '';
+    this.filterEvents();
   }
 
 }

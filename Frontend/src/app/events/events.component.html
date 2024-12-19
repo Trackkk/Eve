@@ -3,20 +3,31 @@
   rel="stylesheet"
 />
 <div class="events-container">
+  <div class="logout-container">
+    <button class="btn btn-logout" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </div>
+
   <div class="search-bar card p-3 shadow-sm mb-3 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center w-100">
       <div class="input-group search-field me-3">
         <span class="input-group-text">
           <i class="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              class="form-control"
-              placeholder=" Search (Name, Location)..."
-              [(ngModel)]="searchTerm"
-              (ngModelChange)="filterEvents()"
-            />
-          </div>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search (Name, Location)..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filterEvents()"
+        />
+      </div>
+
+      <button class="btn btn-outline-secondary me-3" (click)="resetFilters()">
+        <i class="bi bi-arrow-counterclockwise"></i> Reset
+      </button>
+
       <mat-form-field class="date-field me-2">
         <mat-label>Start Date</mat-label>
         <input
@@ -41,12 +52,15 @@
         <mat-datepicker #endDatePicker></mat-datepicker>
       </mat-form-field>
 
-      <button class="btn btn-success" (click)="openCreateForm()">
-        <i class="bi bi-plus-circle"></i> New Event
-      </button>
+      <div>
+        <button class="btn btn-success" (click)="openCreateForm()">
+          <i class="bi bi-plus-circle"></i> New Event
+        </button>
+        <button class="btn btn-my-tickets" routerLink="/tickets">
+          <i class="bi bi-ticket"></i> My tickets
+        </button>
+      </div>
     </div>
-
-
   </div>
 
   <div class="table-responsive card shadow-sm p-3">
@@ -56,6 +70,7 @@
         <th>Event Name</th>
         <th>Location</th>
         <th>Date</th>
+        <th>Ticket Price</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -64,12 +79,13 @@
         <td>{{ event.name }}</td>
         <td>{{ event.location }}</td>
         <td>{{ event.date | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ event.price }} HUF</td>
         <td>
           <button class="btn btn-sm btn-outline-success me-1" (click)="buyTicket(event.id)">
             <i class="bi bi-cart-plus"></i>
           </button>
-          <button  *ngIf="event.creatorEmail === currentUserEmail"
-                   class="btn btn-sm btn-outline-primary me-1" (click)="openEditForm(event)">
+          <button *ngIf="event.creatorEmail === currentUserEmail"
+                  class="btn btn-sm btn-outline-primary me-1" (click)="openEditForm(event)">
             <i class="bi bi-pencil"></i>
           </button>
           <button *ngIf="event.creatorEmail === currentUserEmail"
