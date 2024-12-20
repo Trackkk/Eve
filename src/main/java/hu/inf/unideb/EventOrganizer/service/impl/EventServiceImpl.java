@@ -81,4 +81,15 @@ public class EventServiceImpl implements EventService {
         return mapper.eventEntityToEventDtoList(eventEntities);
     }
 
+
+    @Override
+    public void updateCreatorEmailForEvents(String oldEmail, String newEmail) {
+        List<EventEntity> events = repo.findByCreatorEmail(oldEmail);
+        for (EventEntity event : events) {
+            event.setCreatorEmail(newEmail);
+            repo.save(event);
+        }
+    }
+
+
 }

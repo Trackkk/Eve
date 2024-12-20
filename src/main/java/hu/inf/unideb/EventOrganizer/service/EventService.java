@@ -18,4 +18,6 @@ public interface EventService {
     EventDto updateEvent(EventDto eventDto);
 
     List<EventDto> searchEvents(String name, String location, Date date);
+
+    void updateCreatorEmailForEvents(String oldEmail, String email);
 }

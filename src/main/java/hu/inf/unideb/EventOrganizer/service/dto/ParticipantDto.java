@@ -9,6 +9,7 @@ public class ParticipantDto {
     private Long id;
     private String name;
     private String email;
+    private String password;
     private String phoneNumber;
 
     public ParticipantDto() {
@@ -53,16 +54,24 @@ public class ParticipantDto {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParticipantDto that = (ParticipantDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(phoneNumber, that.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, phoneNumber);
+        return Objects.hash(id, name, email, password, phoneNumber);
     }
 }
