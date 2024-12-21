@@ -56,7 +56,8 @@ export class ParticipantComponent implements OnInit {
         this.participantService.updateParticipant(this.participant).subscribe({
           next: () => {
             console.log(`Participant Updated`);
-            alert('Participant updated successfully!');
+            alert('Participant updated successfully! Please log in again');
+            this.logout();
           }
         });
       });
