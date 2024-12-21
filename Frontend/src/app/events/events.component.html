@@ -2,100 +2,109 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
   rel="stylesheet"
 />
-<div class="events-container">
-  <div class="logout-container">
-    <button class="btn btn-logout" (click)="logout()">
+<div class="container-fluid d-flex">
+  <div class="sidebar text-white d-flex flex-column p-3" style="width: 250px; min-height: 100vh;">
+    <h3 class="text-center mb-4">Menu</h3>
+    <button class="btn-sidebar btn-logout mb-3" (click)="logout()">
       <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+    <button class="btn-sidebar btn-participant mb-3" routerLink="/participant">
+      <i class="bi bi-person-circle"></i> My Account
+    </button>
+    <button class="btn-sidebar btn-my-tickets" routerLink="/tickets">
+      <i class="bi bi-ticket"></i> My tickets
     </button>
   </div>
 
-  <div class="search-bar card p-3 shadow-sm mb-3 d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center w-100">
-      <div class="input-group search-field me-3">
-        <span class="input-group-text">
-          <i class="bi bi-search"></i>
-        </span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search (Name, Location)..."
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="filterEvents()"
-        />
-      </div>
+  <div class="events-container flex-fill">
+    <div class="logout-container">
+    </div>
 
-      <button class="btn btn-outline-secondary me-3" (click)="resetFilters()">
-        <i class="bi bi-arrow-counterclockwise"></i> Reset
-      </button>
+    <div class="search-bar card p-3 shadow-sm mb-3 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center w-100">
+        <div class="input-group search-field me-3">
+          <span class="input-group-text">
+            <i class="bi bi-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search (Name, Location)..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="filterEvents()"
+          />
+        </div>
 
-      <mat-form-field class="date-field me-2">
-        <mat-label>Start Date</mat-label>
-        <input
-          matInput
-          [(ngModel)]="startDate"
-          (ngModelChange)="filterEvents()"
-          [matDatepicker]="startDatePicker"
-        />
-        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #startDatePicker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field class="date-field me-2">
-        <mat-label>End Date</mat-label>
-        <input
-          matInput
-          [(ngModel)]="endDate"
-          (ngModelChange)="filterEvents()"
-          [matDatepicker]="endDatePicker"
-        />
-        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #endDatePicker></mat-datepicker>
-      </mat-form-field>
-
-      <div>
-        <button class="btn btn-success" (click)="openCreateForm()">
-          <i class="bi bi-plus-circle"></i> New Event
+        <button class="btn btn-reset me-3" (click)="resetFilters()">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset
         </button>
-        <button class="btn btn-my-tickets" routerLink="/tickets">
-          <i class="bi bi-ticket"></i> My tickets
-        </button>
+
+        <mat-form-field class="date-field me-2">
+          <mat-label>Start Date</mat-label>
+          <input
+            matInput
+            [(ngModel)]="startDate"
+            (ngModelChange)="filterEvents()"
+            [matDatepicker]="startDatePicker"
+          />
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="date-field me-2">
+          <mat-label>End Date</mat-label>
+          <input
+            matInput
+            [(ngModel)]="endDate"
+            (ngModelChange)="filterEvents()"
+            [matDatepicker]="endDatePicker"
+          />
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <div>
+          <button class="btn btn-success" (click)="openCreateForm()">
+            <i class="bi bi-plus"></i> New Event
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="table-responsive card shadow-sm p-3">
-    <table class="table table-bordered table-hover text-center">
-      <thead class="table-primary">
-      <tr>
-        <th>Event Name</th>
-        <th>Location</th>
-        <th>Date</th>
-        <th>Ticket Price</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let event of filteredEvents">
-        <td>{{ event.name }}</td>
-        <td>{{ event.location }}</td>
-        <td>{{ event.date | date: 'yyyy-MM-dd' }}</td>
-        <td>{{ event.price }} HUF</td>
-        <td>
-          <button class="btn btn-sm btn-outline-success me-1" (click)="buyTicket(event.id)">
-            <i class="bi bi-cart-plus"></i>
-          </button>
-          <button *ngIf="event.creatorEmail === currentUserEmail"
-                  class="btn btn-sm btn-outline-primary me-1" (click)="openEditForm(event)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button *ngIf="event.creatorEmail === currentUserEmail"
-                  class="btn btn-sm btn-outline-danger" (click)="deleteEvent(event.id)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive card shadow-sm p-3">
+      <table class="table table-bordered table-hover text-center">
+        <thead class="table-primary">
+        <tr>
+          <th>Event Name</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Ticket Price</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let event of filteredEvents">
+          <td>{{ event.name }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ event.price }} HUF</td>
+          <td>
+            <button class="btn btn-sm btn-outline-success me-1" (click)="buyTicket(event.id)">
+              <i class="bi bi-cart-plus"></i>
+            </button>
+            <button *ngIf="event.creatorEmail === currentUserEmail"
+                    class="btn btn-sm btn-outline-primary me-1" (click)="openEditForm(event)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button *ngIf="event.creatorEmail === currentUserEmail"
+                    class="btn btn-sm btn-outline-danger" (click)="deleteEvent(event.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -42,24 +42,13 @@
   margin: 3px 0;
   border-radius: 50px;
   color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 5px 5px 5px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .btn-success:hover {
+  transform: scale(1.05);
   background-color: #218838;
-}
-
-.btn-my-tickets {
-  background-color: #afa727;
-  border: none;
-  min-width: 150px;
-  height: 35px;
-  margin: 3px 0;
-  border-radius: 50px;
-  color: #fff;
-}
-
-.btn-my-tickets:hover {
-  background-color: #989222;
 }
 
 .table {
@@ -67,7 +56,7 @@
 }
 
 .table th {
-  background-color: #3d5af1;
+  background-color: #5483ff;
   color: #fff;
   font-weight: bold;
 }
@@ -112,18 +101,12 @@
   border-radius: 20px;
 }
 
-.logout-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-}
-
-.btn-logout {
-  background-color: #dc3545;
-  color: white;
+.btn-reset {
+  background-color: #ff5e5e;
   border: none;
-  padding: 10px 20px;
+  color: white;
+  box-shadow: 5px 5px 5px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 15px;
   font-size: 0.9rem;
   border-radius: 25px;
   display: flex;
@@ -131,20 +114,133 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn-logout:hover {
-  background-color: #c82333;
+.btn-reset:hover {
+  background-color: #e64646;
   transform: scale(1.05);
 }
 
-.btn-logout i {
+.btn-reset i {
   margin-right: 8px;
 }
 
-.btn-logout:focus {
+.btn-reset:focus {
   outline: none;
+}
+
+.btn-reset:active {
+  background-color: #bd2130;
+  color: white;
+  transform: scale(0.98);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding-top: 20px;
+  background-color: #5483ff;
+  color: white;
+}
+
+.sidebar h3 {
+  font-size: 2.0rem;
+}
+
+.events-container {
+  margin-left: 250px;
+  padding: 20px;
+  width: 100%;
+}
+
+.events-container .search-bar,
+.events-container .table-responsive {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.table-responsive {
+  margin-top: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 80%;
+  max-width: 600px;
+}
+
+.btn-sidebar {
+  border: none;
+  color: white;
+  box-shadow: 5px 5px 5px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 10px 20px;
+  margin: 0 20px;
+  font-size: 0.9rem;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-sidebar:hover {
+  transform: scale(1.05);
+}
+
+.btn-sidebar i {
+  margin-right: 8px;
+}
+
+.btn-sidebar:focus {
+  outline: none;
+}
+
+.btn-sidebar:active {
+  transform: scale(0.98);
+}
+
+.btn-logout {
+  background-color: #dc3545;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
 }
 
 .btn-logout:active {
   background-color: #bd2130;
-  transform: scale(0.98);
+}
+
+.btn-participant {
+  background-color: #14a11b;
+}
+
+.btn-participant:hover {
+  background-color: #129119;
+}
+
+.btn-participant:active {
+  background-color: #23a51e;
+}
+
+.btn-my-tickets {
+  background-color: #afa727;
+}
+
+.btn-my-tickets:hover {
+  background-color: #989222;
+}
+
+.btn-my-tickets:active {
+  background-color: #23a51e;
 }

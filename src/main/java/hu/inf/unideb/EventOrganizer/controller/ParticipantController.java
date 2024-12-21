@@ -5,9 +5,9 @@ import hu.inf.unideb.EventOrganizer.service.ParticipantService;
 import hu.inf.unideb.EventOrganizer.service.dto.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +20,9 @@ public class ParticipantController {
 
     @Autowired
     private ParticipantService participantService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
     public ResponseEntity<Void> handleOptions(){
@@ -52,7 +55,10 @@ public class ParticipantController {
         if (participantDto.getEmail() == null) {
             participantDto.setEmail(existingParticipant.getEmail());
         }
-        if (participantDto.getPassword() == null) {
+
+        if (participantDto.getPassword() != null) {
+            participantDto.setPassword(passwordEncoder.encode(participantDto.getPassword()));
+        } else {
             participantDto.setPassword(existingParticipant.getPassword());
         }
 
@@ -62,9 +68,6 @@ public class ParticipantController {
 
         return participantService.saveParticipant(participantDto);
     }
-
-
-
 
 
     @DeleteMapping("/{id}")
